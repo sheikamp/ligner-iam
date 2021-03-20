@@ -1,5 +1,7 @@
 package com.aimlesslyfree.ligner.iam.db;
 
+import java.util.UUID;
+
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,7 @@ public class UserRepositoryTest {
 
     @Test
     void shouldCreateUser() {
-        var user = new User("foo@bar.com", "Foo Bar");
+        var user = new User(UUID.randomUUID().toString(), "foo@bar.com", "Foo Bar");
         userRepository.save(user);
 
         var users = userRepository.findAll();
