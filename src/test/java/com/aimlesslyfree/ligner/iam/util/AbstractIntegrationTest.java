@@ -27,7 +27,8 @@ public class AbstractIntegrationTest {
     static MariaDBContainer mariaDB = new MariaDBContainer("mariadb:10.5.9").withDatabaseName("iam");
 
     @Container
-    static RabbitMQContainer rabbitMQ = new RabbitMQContainer("rabbitmq:3.7.25-management-alpine");
+    static RabbitMQContainer rabbitMQ = new RabbitMQContainer("rabbitmq:3.7.25-management-alpine")
+            .withExposedPorts(5672);
 
     private static void startContainers() {
       Startables.deepStart(Stream.of(mariaDB, rabbitMQ)).join();
@@ -37,7 +38,9 @@ public class AbstractIntegrationTest {
       return Map.of(
           "spring.datasource.url", mariaDB.getJdbcUrl(),
           "spring.datasource.username", mariaDB.getUsername(),
-          "spring.datasource.password", mariaDB.getPassword()
+          "spring.datasource.password", mariaDB.getPassword(),
+          "spring.rabbitmq.host", rabbitMQ.getContainerIpAddress(),
+          "spring.rabbitmq.port", rabbitMQ.getMappedPort(5672)
       );
     }
 
