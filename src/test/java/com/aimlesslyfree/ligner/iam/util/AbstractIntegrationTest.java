@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import org.testcontainers.containers.MariaDBContainer;
+import org.testcontainers.containers.RabbitMQContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.lifecycle.Startables;
 
@@ -25,8 +26,11 @@ public class AbstractIntegrationTest {
     @Container
     static MariaDBContainer mariaDB = new MariaDBContainer("mariadb:10.5.9").withDatabaseName("iam");
 
+    @Container
+    static RabbitMQContainer rabbitMQ = new RabbitMQContainer("rabbitmq:3.7.25-management-alpine");
+
     private static void startContainers() {
-      Startables.deepStart(Stream.of(mariaDB)).join();
+      Startables.deepStart(Stream.of(mariaDB, rabbitMQ)).join();
     }
 
     private static Map<String, Object> createConnectionConfiguration() {
