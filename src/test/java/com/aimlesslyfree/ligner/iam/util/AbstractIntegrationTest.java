@@ -29,7 +29,7 @@ public class AbstractIntegrationTest {
       Startables.deepStart(Stream.of(mariaDB)).join();
     }
 
-    private static Map<String, String> createConnectionConfiguration() {
+    private static Map<String, Object> createConnectionConfiguration() {
       return Map.of(
           "spring.datasource.url", mariaDB.getJdbcUrl(),
           "spring.datasource.username", mariaDB.getUsername(),
@@ -44,10 +44,7 @@ public class AbstractIntegrationTest {
 
       ConfigurableEnvironment environment = applicationContext.getEnvironment();
 
-      MapPropertySource testcontainers = new MapPropertySource(
-          "testcontainers",
-          (Map) createConnectionConfiguration()
-      );
+      MapPropertySource testcontainers = new MapPropertySource("testcontainers", createConnectionConfiguration());
 
       environment.getPropertySources().addFirst(testcontainers);
     }
