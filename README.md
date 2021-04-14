@@ -36,6 +36,8 @@ and informs interested parties about changes to its entities by publishing event
 
 * Java 11
 * Spring Boot (Web)
+* REST
+* Maven 
 * MariaDB
 * RabbitMQ
 
@@ -56,7 +58,7 @@ The following tools are required for building the application:
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/github_username/repo_name.git
+   git clone https://github.com/sheikamp/ligner-iam
    ```
 2. Build the docker image
    ```sh
